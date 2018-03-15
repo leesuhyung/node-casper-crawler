@@ -50,7 +50,7 @@ app.post('/commands', (req, res) => {
                     },
                     {
                         label: 'Password',
-                        type: 'password',
+                        type: 'text',
                         name: 'password',
                         hint: '옐로스토리 비밀번호를 입력하세요.',
                     },
