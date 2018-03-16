@@ -28,7 +28,6 @@ casper.then(function () {
             document.querySelector('input[name=password]').value = password;
             document.querySelector('button[type=submit]').click();
         }, email, password);
-        this.echo('로그인 시도함!');
     });
 });
 
@@ -50,7 +49,7 @@ casper.waitFor(function check() {
     //     console.log(v.name+":"+v.value);
     // });
 
-    // TODO: express post 로 http://yellocoin.com/mypage/data/timelineListData
+    // TODO: http://yellocoin.com/mypage/data/timelineListData
     // TODO: ptype = 2, startDate = 2018-03-01, endDate = 2018-03-16
     // TODO: 보내고 리턴데이터 중 total_count, total_sum 만 가져온다.
 
@@ -59,6 +58,19 @@ casper.waitFor(function check() {
     returnData.message = '로그인에 실패했습니다.';
     this.exit();
 });
+
+// TODO: 요걸로 해보기
+/*casper.open('http://example.com/ajax.php', {
+    method: 'POST',
+    data: {
+        'title': '<title>',
+        'unique_id': '<unique_id>'
+    }
+}, function(response){
+    if(response.status == 200){
+        require('utils').dump(this.page.content);
+    }
+});*/
 
 /**
  * 기간기정 라벨 클릭
