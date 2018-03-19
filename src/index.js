@@ -28,63 +28,7 @@ app.post('/commands', (req, res) => {
     // and trigger ID from payload
     const {token, trigger_id} = req.body;
 
-    // check that the verification token matches expected value
-    if (token === process.env.SLACK_VERIFICATION_TOKEN) {
-        // create the dialog payload - includes the dialog structure, Slack API token,
-        // and trigger ID
-        const dialog = {
-            token: process.env.SLACK_ACCESS_TOKEN,
-            trigger_id,
-            dialog: JSON.stringify({
-                title: 'Submit a helpdesk ticket',
-                callback_id: 'submit-ticket',
-                submit_label: 'Submit',
-                elements: [
-                    {
-                        label: 'Email',
-                        type: 'text',
-                        name: 'email',
-                        subtype: 'email',
-                        placeholder: 'you@yellostory.co.kr',
-                        hint: '옐로스토리 이메일을 입력하세요.',
-                    },
-                    {
-                        label: 'Password',
-                        type: 'text',
-                        name: 'password',
-                        hint: '옐로스토리 비밀번호를 입력하세요.',
-                    },
-                    {
-                        label: 'StartDate',
-                        type: 'text',
-                        name: 'startDate',
-                        placeholder: '예)2018-01-01',
-                        hint: '옐로코인 조회기간(시작)',
-                    },
-                    {
-                        label: 'EndDate',
-                        type: 'text',
-                        name: 'endDate',
-                        placeholder: '예)2018-01-01',
-                        hint: '옐로코인 조회기간(끝)',
-                    },
-                ],
-            }),
-        };
-
-        // open the dialog by calling dialogs.open method and sending the payload
-        axios.post('https://slack.com/api/dialog.open', qs.stringify(dialog))
-            .then((result) => {
-                debug('dialog.open: %o', result.data);
-                res.send('');
-            }).catch((err) => {
-            debug('dialog.open call failed: %o', err);
-            res.sendStatus(500);
-        });
-    } else {
-        debug('Verification token mismatch');
-        res.sendStatus(500);
-    }
+    res.end(token);
 });
 
 /*
