@@ -28,7 +28,7 @@ app.post('/commands', (req, res) => {
     // and trigger ID from payload
     const {token, trigger_id} = req.body;
 
-    req.end(process.env.SLACK_ACCESS_TOKEN);
+    res.send(process.env.SLACK_ACCESS_TOKEN);
 
 });
 
