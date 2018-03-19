@@ -25,9 +25,8 @@ app.get('/', (req, res) => {
  * Checks verification token and opens a dialog to capture more info.
  */
 app.post('/commands', (req, res) => {
-    // extract the verification token, slash command text,
     // and trigger ID from payload
-    const {token, text, trigger_id} = req.body;
+    const {token, trigger_id} = req.body;
 
     // check that the verification token matches expected value
     if (token === process.env.SLACK_VERIFICATION_TOKEN) {
@@ -45,7 +44,8 @@ app.post('/commands', (req, res) => {
                         label: 'Email',
                         type: 'text',
                         name: 'email',
-                        value: text,
+                        subtype: 'email',
+                        placeholder: 'you@yellostory.co.kr',
                         hint: '옐로스토리 이메일을 입력하세요.',
                     },
                     {
@@ -54,16 +54,20 @@ app.post('/commands', (req, res) => {
                         name: 'password',
                         hint: '옐로스토리 비밀번호를 입력하세요.',
                     },
-                    /*{
-                      label: 'Urgency',
-                      type: 'select',
-                      name: 'urgency',
-                      options: [
-                        { label: 'Low', value: 'Low' },
-                        { label: 'Medium', value: 'Medium' },
-                        { label: 'High', value: 'High' },
-                      ],
-                    },*/
+                    {
+                        label: 'StartDate',
+                        type: 'text',
+                        name: 'startDate',
+                        placeholder: '예)2018-01-01',
+                        hint: '옐로코인 조회기간(시작)',
+                    },
+                    {
+                        label: 'EndDate',
+                        type: 'text',
+                        name: 'endDate',
+                        placeholder: '예)2018-01-01',
+                        hint: '옐로코인 조회기간(끝)',
+                    },
                 ],
             }),
         };
