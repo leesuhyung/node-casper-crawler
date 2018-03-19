@@ -2,6 +2,32 @@ const axios = require('axios');
 const debug = require('debug')('slash-command-template:ticket');
 const qs = require('querystring');
 const users = require('./users');
+const exec = require('child-process-promise').exec;
+
+const requestYcoin = (ticket) => {
+    exec('node_modules/casperjs/bin/casperjs src/coin.js --params=\'' + qs.stringify({
+        email: ticket.email,
+        password: ticket.password,
+        startDate: ticket.startDate,
+        endDate: ticket.endDate
+    }) + '\'')
+        .then(function (result) {
+            var stdout = JSON.parse(result.stdout);
+
+            ticket.status = stdout.status;
+            ticket.message = stdout.message;
+            ticket.total_count = stdout.total_count;
+            ticket.total_sum = stdout.total_sum;
+
+            return ticket;
+        })
+        .catch(function (err) {
+            ticket.status = 500;
+            ticket.message = err;
+
+            return ticket;
+        });
+};
 
 /*
  *  Send ticket creation confirmation via
@@ -11,30 +37,23 @@ const sendConfirmation = (ticket) => {
     axios.post('https://slack.com/api/chat.postMessage', qs.stringify({
         token: process.env.SLACK_ACCESS_TOKEN,
         channel: ticket.userId,
-        text: 'Helpdesk ticket created!',
+        text: '옐로코인 조회 결과 입니다!',
         attachments: JSON.stringify([
             {
-                title: `Ticket created for ${ticket.userEmail}`,
+                title: '옐로코인 바로가기',
                 title_link: 'http://yellocoin.com',
-                text: '텍스트 자리입니다.',
                 fields: [
                     {
-                        title: 'Email',
-                        value: ticket.email,
+                        title: '조회기간',
+                        value: ticket.startDate + '~' + ticket.endDate,
                     },
                     {
-                        title: 'Password',
-                        value: ticket.password,
+                        title: '결과',
+                        value: ticket.status + ':' + ticket.message,
                     },
                     {
-                      title: 'StartDate',
-                      value: ticket.startDate,
-                      short: true,
-                    },
-                    {
-                      title: 'EndDate',
-                      value: ticket.endDate,
-                      short: true,
+                        title: '결과',
+                        value: ticket.total_count + ':' + ticket.total_sum,
                     },
                 ],
             },
@@ -68,6 +87,7 @@ const create = (userId, submission) => {
         ticket.password = submission.password;
         ticket.startDate = submission.startDate;
         ticket.endDate = submission.endDate;
+        requestYcoin(ticket);
         sendConfirmation(ticket);
 
         return ticket;
