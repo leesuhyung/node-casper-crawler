@@ -12,7 +12,7 @@ const requestYcoin = (ticket) => {
         "endDate": ticket.endDate
     });
 
-    exec('node_modules/casperjs/bin/casperjs src/coin.js --params=\'' + json + '\'')
+    exec('./node_modules/casperjs/bin/casperjs src/coin.js --params=\'' + json + '\'')
         .then(function (result) {
             var stdout = JSON.parse(result.stdout);
 
