@@ -19,13 +19,13 @@ const requestYcoin = (ticket) => {
             ticket.total_count = stdout.total_count;
             ticket.total_sum = stdout.total_sum;
 
-            return ticket;
+            sendConfirmation(ticket);
         })
         .catch(function (err) {
             ticket.status = 500;
             ticket.message = err;
 
-            return ticket;
+            sendConfirmation(ticket);
         });
 };
 
@@ -88,7 +88,7 @@ const create = (userId, submission) => {
         ticket.startDate = submission.startDate;
         ticket.endDate = submission.endDate;
         requestYcoin(ticket);
-        sendConfirmation(ticket);
+        // sendConfirmation(ticket);
 
         return ticket;
     }).catch((err) => {
