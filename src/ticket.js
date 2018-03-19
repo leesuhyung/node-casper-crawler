@@ -5,12 +5,14 @@ const users = require('./users');
 const exec = require('child-process-promise').exec;
 
 const requestYcoin = (ticket) => {
-    exec('node_modules/casperjs/bin/casperjs src/coin.js --params=\'' + qs.stringify({
-        email: ticket.email,
-        password: ticket.password,
-        startDate: ticket.startDate,
-        endDate: ticket.endDate
-    }) + '\'')
+    var json = JSON.stringify({
+        "email": ticket.email,
+        "password": ticket.password,
+        "startDate": ticket.startDate,
+        "endDate": ticket.endDate
+    });
+
+    exec('node_modules/casperjs/bin/casperjs src/coin.js --params=\'' + json + '\'')
         .then(function (result) {
             var stdout = JSON.parse(result.stdout);
 
