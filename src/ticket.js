@@ -15,9 +15,8 @@ const sendConfirmation = (ticket) => {
         attachments: JSON.stringify([
             {
                 title: `Ticket created for ${ticket.userEmail}`,
-                // Get this from the 3rd party helpdesk system
-                title_link: 'http://example.com',
-                text: ticket.text,
+                title_link: 'http://yellocoin.com',
+                text: '텍스트 자리입니다.',
                 fields: [
                     {
                         title: 'Email',
