@@ -1,8 +1,8 @@
 const exec = require('child-process-promise').exec;
 
 var json = JSON.stringify({
-    "email": "shlee1129@yellostory.co.kr",
-    "password": "new1526615!",
+    "email": "you@email.com",
+    "password": "password",
     "startDate": "2018-02-01",
     "endDate": "2018-02-28"
 });

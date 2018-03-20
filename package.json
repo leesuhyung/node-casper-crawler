@@ -1,13 +1,13 @@
 {
-  "name": "slash-command-blueprint",
+  "name": "y-coin",
   "private": true,
   "version": "1.0.0",
-  "description": "Sample Slack app that responds to an Slack slash command with an interactive message",
+  "description": "Slack slash command /ycoin",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "DEBUG=slash-command-template node src/index.js"
+    "start": "DEBUG=y-coin node src/index.js"
   },
-  "author": "Sachin Ranchod <sranchod@slack-corp.com>",
+  "author": "navystyle",
   "engines": {
     "node": ">=4.2.0",
     "npm": ">=2.14.7"
