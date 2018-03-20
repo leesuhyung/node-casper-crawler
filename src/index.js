@@ -41,13 +41,13 @@ app.post('/commands', (req, res) => {
                         name: 'email',
                         subtype: 'email',
                         placeholder: 'you@yellostory.co.kr',
-                        hint: '옐로스토리 이메일을 입력하세요.',
+                        hint: '옐로코인 이메일을 입력하세요.',
                     },
                     {
                         label: 'Password',
                         type: 'text',
                         name: 'password',
-                        hint: '옐로스토리 비밀번호를 입력하세요.',
+                        hint: '옐로코인 비밀번호를 입력하세요.',
                     },
                     {
                         label: 'StartDate',
@@ -84,6 +84,7 @@ app.post('/commands', (req, res) => {
 
 /**
  * 슬랙에서 dialog 가 submit 되면 자동으로 호출되는 곳
+ * payload 가 수신되면 3초 이내로 슬랙에 응답해야 함.
  */
 app.post('/interactive-component', (req, res) => {
     const body = JSON.parse(req.body.payload);
@@ -91,7 +92,7 @@ app.post('/interactive-component', (req, res) => {
     if (body.token === process.env.SLACK_VERIFICATION_TOKEN) {
         debug(`trigger_id: ${body.submission.trigger_id}`);
 
-        // 공백 200 응답을 우선 슬랙에 전달 (해당 호출은 5초 이내 슬랙에 응답해야 함. or die)
+        // payload 값이 유효하면 200 OK empty body 응답.
         res.send('');
 
         // create obj

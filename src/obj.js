@@ -36,7 +36,7 @@ const requestYcoin = (obj) => {
 };
 
 /**
- * 슬랙 전송
+ * 슬랙 피드백 전송
  * @param obj
  */
 const sendConfirmation = (obj) => {
